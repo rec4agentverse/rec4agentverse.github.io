@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Images</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #f4f4f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    margin-top: 20px;
+    color: #333;
+  }
+  h1 {
+    text-shadow: 1px 1px 2px #aaa;
+  }
+
+  .center {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%; /* Ensure full width */
+    margin: 30px 0;
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    width: calc(50% - 20px);
+    margin: 10px; /* Add margins around each image container */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    border: 1px solid #ddd;
+  }
+
+  .image-container img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+
+  .image-container2 {
+    display: flex;
+    justify-content: center;
+    width: calc(30% - 20px);
+    margin: 10px; /* Add margins around each image container */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    border: 1px solid #ddd;
+  }
+
+  .image-container2 img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+
+  .image-container:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  }
+
+  .image-container img:hover {
+    transform: scale(1.1);
+    filter: brightness(1);
+  }
+  .image-container2:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  }
+
+  .image-container2 img:hover {
+    transform: scale(1.1);
+    filter: brightness(1);
+  }
+</style>
+</head>
+<body>
+
+<h1>Rec4Agentverse</h1>
+
+<div class="center">
+  <div class="image-container2">
+    <a href="case1.html">
+      <img src="stage1.jpg" alt="Image 1">
+    </a>
+  </div>
+  <div class="image-container">
+    <a href="case2.html">
+      <img src="stage2.jpg" alt="Image 2">
+    </a>
+  </div>
+  <div class="image-container">
+    <a href="case3.html">
+      <img src="stage3.jpg" alt="Image 3">
+    </a>
+  </div>
+</div>
+
+</body>
+</html>
