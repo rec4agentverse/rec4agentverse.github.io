@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Fantopia</title>
+<style>
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 20px;
+    }
+    .title-bar {
+        text-align: center;
+        margin: 10px 0;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+    .subtitle-bar {
+        background-color: #e7f4ff; /* Background color for the subtitle */
+        border-radius: 8px;
+        padding: 10px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center; /* Center content vertically */
+        position: relative; /* Needed to position the avatar correctly */
+        padding-right: 60px;
+    }
+    .subtitle-bar .avatar {
+        width: 60px; /* Smaller avatar size for the subtitle */
+        height: 60px;
+        /* border-radius: 50%; */
+        object-fit: cover;
+        position: absolute; /* Position avatar inside subtitle bar */
+        top: 10pt;
+        right: 10pt; /* Distance from left */
+        /* z-index: -1 */
+    }
+    .subtitle-bar .subtitle {
+        margin-left: 60px; /* Make space for the avatar */
+        color: #0f1c51; /* Text color for subtitle */
+    }
+    .subtitle-bar-2 {
+        background-color: rgba(249, 168, 38, 0.15); /* Background color for the subtitle */
+        border-radius: 8px;
+        padding: 10px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center; /* Center content vertically */
+        position: relative; /* Needed to position the avatar correctly */
+        padding-right: 60px;
+    }
+    .subtitle-bar-2 .avatar {
+        width: 60px; /* Smaller avatar size for the subtitle */
+        height: 60px;
+        /* border-radius: 50%; */
+        object-fit: cover;
+        position: absolute; /* Position avatar inside subtitle bar */
+        top: 10pt;
+        right: 10pt; /* Distance from left */
+        /* z-index: -1 */
+    }
+    .subtitle-bar-2 .subtitle {
+        margin-left: 60px; /* Make space for the avatar */
+        color: #0f1c51; /* Text color for subtitle */
+    }
+    .subtitle-bar-3 {
+        background-color: rgba(249, 168, 38, 0.071); /* Background color for the subtitle */
+        border-radius: 8px;
+        padding: 10px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center; /* Center content vertically */
+        position: relative; /* Needed to position the avatar correctly */
+        padding-right: 60px;
+    }
+    .subtitle-bar-3.avatar {
+        width: 60px; /* Smaller avatar size for the subtitle */
+        height: 60px;
+        /* border-radius: 50%; */
+        object-fit: cover;
+        position: absolute; /* Position avatar inside subtitle bar */
+        top: 10pt;
+        right: 10pt; /* Distance from left */
+        /* z-index: -1 */
+    }
+    .subtitle-bar-3 .subtitle {
+        margin-left: 60px; /* Make space for the avatar */
+        color: #0f1c51; /* Text color for subtitle */
+    }
+    .dialogue-box {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin: 20px auto;
+        width: 80%;
+        max-width: 10000px;
+        padding: 20px;
+        white-space: normal;
+    }
+    .message {
+        display: flex;
+        margin-bottom: 10px;
+        align-items: flex-start;
+    }
+    .message:last-child {
+        margin-bottom: 0;
+    }
+    .person1 .text,
+    .person2 .text {
+        border-radius: 15px;
+        padding: 10px;
+        margin: 5px;
+        max-width: 80%;
+        line-height: 1.4;
+    }
+    .person3 .text {
+        border-radius: 15px;
+        padding: 10px;
+        margin: 5px;
+        max-width: 80%;
+        line-height: 1.4;
+    }
+    .person5 .text {
+        border-radius: 15px;
+        padding: 10px;
+        margin: 5px;
+        max-width: 80%;
+        line-height: 1.4;
+    }
+    .person6 .text {
+        border-radius: 15px;
+        padding: 10px;
+        margin: 5px;
+        max-width: 100%;
+        line-height: 1.4;
+    }
+    .person4 .text {
+        border-radius: 15px;
+        padding: 10px;
+        margin: 5px;
+        max-width: 80%;
+        line-height: 1.4;
+    }
+    .person1 {
+        justify-content: flex-start;
+    }
+    .person1 .avatar {
+        margin-right: 10px;
+    }
+    .person1 .text {
+        background-color: #f0e7ff;
+        color: #5d0085;
+    }
+    .person2 {
+        justify-content: flex-end;
+    }
+    .person2 .avatar {
+        margin-right: 10px;
+    }
+    .person2 .text {
+        background-color: #e7f4ff;
+        color: #004085;
+    }
+    .person3 {
+        justify-content: flex-end;
+    }
+    .person3 .avatar {
+        margin-left: 10px;
+    }
+    .person3 .text {
+        background-color:rgba(249, 168, 38, 0.1);
+        color: #51380f;
+    }
+    .person5 {
+        /* justify-content: flex-end; */
+    }
+    .person5 .avatar {
+        margin-right: 10px;
+    }
+    .person5 .text {
+        background-color: #e7f4ff;
+        color: #004085;
+    }
+    .person6 {
+        /* justify-content: flex-end; */
+    }
+    .person6 .avatar {
+        margin-right: 10px;
+    }
+    .person6 .text {
+        background-color: rgb(220, 220, 220);
+        color: #51380f;
+    }
+    .person4 {
+        /* justify-content: flex-end; */
+    }
+    .person4 .avatar {
+        margin-left: 10px;
+    }
+    .person4 .text {
+        background-color:rgba(33, 33, 33, 0.1);
+        color: #51380f;
+    }
+    .avatar {
+        width: 60px;
+        height: 60px;
+        /* border-radius: 50%; */
+    }
+    .colorbox {
+            width: 100%;     /* 设置框的宽度 */
+            height: auto;    /* 设置框的高度 */
+            background-color:  rgba(249, 168, 38, 0.071);  /* 设置框的背景颜色 */
+        }
+</style>
+</head>
+<body>
+<div class="title-bar"> Fantopia</div>
+<div class="subtitle-bar">
+    <!-- <img class="avatar" src="rec.jpg" alt="Person 2 Avatar"> -->
+    <div class="subtitle">
+        Use the background knowledge to construct a local Agent for Fantopia:
+        <br>
+        <p>You are a guide Agent for a place called Fantopia, and your task is to communicate with users and customize their travel plans. Ten famous tourist attractions of Fantopia, and finally the time for traveling between each of these 10 famous tourist attractions.</p>
+<h5 id="tenfamoustouristattractions">Ten famous tourist attractions</h5>
+<h3 id="1crystalcaverns">1. Crystal Caverns</h3>
+<p><strong>Description:</strong> A mesmerizing underground world of glittering crystals.<br />
+<strong>Location Type:</strong> Cave<br />
+<strong>Recommended Visiting Time:</strong> Morning<br />
+<strong>Duration Required:</strong> 3 hours  </p>
+<p><strong>Tour Suggestions:</strong> Begin your journey into the Crystal Caverns with a guided tour that starts at the main entrance, where you’ll be given safety gear and a brief history of the caverns. As you descend into the cool, dimly lit tunnels, marvel at the walls adorned with countless sparkling crystals in a spectrum of colors. Your guide will point out unique formations such as the Giant’s Chalice, a massive crystal cluster that glows with an ethereal light. Don’t miss the Echo Chamber, where the acoustics create hauntingly beautiful sounds when you speak or sing. Conclude your tour at the Crystal Lake, a serene underground pool reflecting the shimmering crystals above, perfect for a moment of quiet reflection or a few stunning photographs.</p>
+<h3 id="2enchantedforest">2. Enchanted Forest</h3>
+<p><strong>Description:</strong> A magical woodland filled with mythical creatures and ancient trees.<br />
+<strong>Location Type:</strong> Forest<br />
+<strong>Recommended Visiting Time:</strong> Afternoon<br />
+<strong>Duration Required:</strong> 4 hours  </p>
+<p><strong>Tour Suggestions:</strong> Enter the Enchanted Forest through the Whispering Gate, where the trees seem to murmur secrets as you pass. Follow the winding paths lined with luminescent mushrooms that light your way. Keep an eye out for the elusive unicorns and fairies that inhabit this mystical realm. Stop by the ancient Wishing Tree, where you can tie a ribbon and make a wish, a tradition said to date back centuries. Take a detour to the Fairy Glade, a hidden clearing where you can often spot fairies dancing in the dappled sunlight. End your visit at the Forest Heart, an enormous tree with a hollow trunk that serves as a natural amphitheater for storytelling and music performances.</p>
+<h3 id="3skywardspires">3. Skyward Spires</h3>
+<p><strong>Description:</strong> Towering mountain peaks offering breathtaking views and thrilling adventures.<br />
+<strong>Location Type:</strong> Mountain Range<br />
+<strong>Recommended Visiting Time:</strong> Early Morning<br />
+<strong>Duration Required:</strong> Full Day  </p>
+<p><strong>Tour Suggestions:</strong> Start your ascent of the Skyward Spires at dawn to catch the sunrise from the Eagle’s Nest viewpoint, where the sky is painted with hues of pink and gold. For the adventurous, take the Sky Bridge, a narrow suspension bridge that offers heart-pounding views of the valleys below. Experienced climbers can tackle the Dragon’s Backbone, a challenging but rewarding climb that leads to the highest peak. For a more leisurely experience, ride the Sky Gondola to the Cloud Terrace, a platform that seems to float among the clouds, offering panoramic views and a perfect spot for a picnic. Don’t forget to visit the Mountain Shrine, a serene temple nestled in the cliffs, where you can meditate and enjoy the tranquility of the high altitudes.</p>
+<h3 id="4seraphimfalls">4. Seraphim Falls</h3>
+<p><strong>Description:</strong> A majestic waterfall cascading into a crystal-clear pool.<br />
+<strong>Location Type:</strong> Waterfall<br />
+<strong>Recommended Visiting Time:</strong> Midday<br />
+<strong>Duration Required:</strong> 2 hours  </p>
+<p><strong>Tour Suggestions:</strong> Arrive at Seraphim Falls around midday, when the sunlight creates rainbows in the mist. Follow the well-marked trail to the Observation Deck for a stunning view of the waterfall in its entirety. For a closer experience, take the path down to the base of the falls, where you can feel the refreshing spray on your face. The pool at the bottom is perfect for a quick dip, so bring your swimwear. There are plenty of shaded areas for a picnic, so pack a lunch and enjoy the natural beauty. Don’t miss the hidden grotto behind the falls, accessible via a narrow, rocky path, where you can sit and watch the water cascade from a unique vantage point.</p>
+<h3 id="5sunfireplains">5. Sunfire Plains</h3>
+<p><strong>Description:</strong> Vast, golden grasslands teeming with wildlife.<br />
+<strong>Location Type:</strong> Plains<br />
+<strong>Recommended Visiting Time:</strong> Late Afternoon<br />
+<strong>Duration Required:</strong> 3 hours  </p>
+<p><strong>Tour Suggestions:</strong> Begin your exploration of the Sunfire Plains in the late afternoon when the golden light enhances the beauty of the landscape. Take a guided safari tour to spot the diverse wildlife, including herds of majestic centaurs, playful nymphs, and the elusive fire foxes. The guides are knowledgeable about the flora and fauna and will share fascinating stories and facts. Stop by the Great Stone Circle, an ancient site believed to be a place of power and ritual. Continue to the Sunset Ridge, a perfect spot to watch the sun dip below the horizon, casting a fiery glow over the plains. Bring binoculars for bird watching, as the plains are home to many rare and beautiful species.</p>
+<h3 id="6moonlitlagoon">6. Moonlit Lagoon</h3>
+<p><strong>Description:</strong> A serene lagoon that glows under the moonlight.<br />
+<strong>Location Type:</strong> Lagoon<br />
+<strong>Recommended Visiting Time:</strong> Evening<br />
+<strong>Duration Required:</strong> 2 hours  </p>
+<p><strong>Tour Suggestions:</strong> Arrive at the Moonlit Lagoon just before dusk to witness the magical transformation as the moon rises and the waters begin to glow with a soft, ethereal light. Rent a small boat or a paddleboard to explore the lagoon at your own pace. As you glide across the shimmering waters, look out for the bioluminescent creatures that light up the depths. The lagoon is surrounded by lush vegetation, and the sounds of nocturnal wildlife add to the enchanting atmosphere. For a truly unforgettable experience, bring a picnic dinner and enjoy it on one of the small, sandy beaches. The tranquility and beauty of the lagoon under the moonlight make it a perfect setting for a romantic evening.</p>
+<h3 id="7starlitobservatory">7. Starlit Observatory</h3>
+<p><strong>Description:</strong> A state-of-the-art facility for stargazing and astronomical exploration.<br />
+<strong>Location Type:</strong> Observatory<br />
+<strong>Recommended Visiting Time:</strong> Night<br />
+<strong>Duration Required:</strong> 2 hours  </p>
+<p><strong>Tour Suggestions:</strong> Visit the Starlit Observatory on a clear night to take full advantage of its powerful telescopes and expert guides. Start with a tour of the facility, where you’ll learn about the latest discoveries in astronomy and the history of stargazing. Attend a live presentation in the planetarium, which offers a breathtaking simulation of the night sky. Afterward, head to the observation deck, where the staff will help you identify constellations, planets, and other celestial bodies. The observatory also offers night sky photography workshops, so bring your camera if you’re interested in capturing the beauty of the stars. Conclude your visit with a hot beverage from the observatory’s café, while you continue to gaze at the wonders of the universe.</p>
+<h3 id="8whisperingdunes">8. Whispering Dunes</h3>
+<p><strong>Description:</strong> Expansive sand dunes that sing with the wind.<br />
+<strong>Location Type:</strong> Desert<br />
+<strong>Recommended Visiting Time:</strong> Early Evening<br />
+<strong>Duration Required:</strong> 3 hours  </p>
+<p><strong>Tour Suggestions:</strong> Arrive at the Whispering Dunes in the early evening, when the temperatures are cooler and the setting sun casts a golden hue over the sands. Begin with a guided camel ride across the dunes, where you’ll learn about the unique ecosystem and the legends of the singing sands. The guides will lead you to the highest dune, known as the Song of the Desert, where the wind creates a haunting melody as it sweeps across the grains. Enjoy a traditional desert dinner at a Bedouin-style camp, complete with local music and storytelling. As night falls, lie back on the soft sand and watch the stars emerge in the clear, unpolluted sky, creating a perfect end to your desert adventure.</p>
+<h3 id="9eldoriacastle">9. Eldoria Castle</h3>
+<p><strong>Description:</strong> An ancient castle with a rich history and stunning architecture.<br />
+<strong>Location Type:</strong> Castle<br />
+<strong>Recommended Visiting Time:</strong> Mid-Morning<br />
+<strong>Duration Required:</strong> 4 hours  </p>
+<p><strong>Tour Suggestions:</strong> Start your tour of Eldoria Castle in the mid-morning to avoid the crowds and have ample time to explore. Begin with the Grand Hall, where you’ll be awed by the intricate tapestries and grand chandeliers. Take a guided tour to learn about the castle’s history, including tales of the royal family and legendary battles. Visit the Armory, which houses an impressive collection of medieval weapons and armor. Don’t miss the Royal Gardens, a beautifully manicured space with exotic plants and tranquil fountains. For a panoramic view of the surrounding countryside, climb the tower to the Observation Deck. Finish your visit with a stop at the castle’s café, where you can enjoy traditional pastries and tea.</p>
+<h3 id="10celestialgardens">10. Celestial Gardens</h3>
+<p><strong>Description:</strong> A botanical paradise with rare and magical plants.<br />
+<strong>Location Type:</strong> Garden<br />
+<strong>Recommended Visiting Time:</strong> Morning<br />
+<strong>Duration Required:</strong> 2 hours  </p>
+<p><strong>Tour Suggestions:</strong> Arrive at the Celestial Gardens early in the morning to enjoy the fresh air and the sight of dew-kissed flowers. Begin your visit with a stroll through the Enchanted Arboretum, where trees with shimmering leaves and whispering branches create a serene atmosphere. Continue to the Floral Maze, a labyrinth of blooming flowers that leads to a central fountain. Don’t miss the Herbarium, where you can learn about the magical properties of various plants and even purchase some to take home. The Butterfly Pavilion is another highlight, housing a variety of rare and colorful butterflies that flutter around you as you walk through. Conclude your visit with a relaxing rest at the Garden Café, surrounded by the beauty and tranquility of the gardens.</p>
+
+<h5 id="thetimeittakestotravelbetweenattractions">The time it takes to travel between attractions</h5>
+<table>
+  <thead>
+    <tr>
+      <th>From \ To</th>
+      <th>Crystal Caverns</th>
+      <th>Enchanted Forest</th>
+      <th>Skyward Spires</th>
+      <th>Seraphim Falls</th>
+      <th>Sunfire Plains</th>
+      <th>Moonlit Lagoon</th>
+      <th>Starlit Observatory</th>
+      <th>Whispering Dunes</th>
+      <th>Eldoria Castle</th>
+      <th>Celestial Gardens</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Crystal Caverns</strong></td>
+      <td>-</td>
+      <td>45 min</td>
+      <td>1 hr 30 min</td>
+      <td>1 hr</td>
+      <td>2 hrs</td>
+      <td>1 hr 15 min</td>
+      <td>2 hrs</td>
+      <td>2 hrs 30 min</td>
+      <td>1 hr 45 min</td>
+      <td>1 hr 30 min</td>
+    </tr>
+    <tr>
+      <td><strong>Enchanted Forest</strong></td>
+      <td>45 min</td>
+      <td>-</td>
+      <td>1 hr</td>
+      <td>1 hr 15 min</td>
+      <td>1 hr 30 min</td>
+      <td>45 min</td>
+      <td>1 hr 45 min</td>
+      <td>2 hrs</td>
+      <td>1 hr</td>
+      <td>1 hr 15 min</td>
+    </tr>
+    <tr>
+      <td><strong>Skyward Spires</strong></td>
+      <td>1 hr 30 min</td>
+      <td>1 hr</td>
+      <td>-</td>
+      <td>1 hr 30 min</td>
+      <td>2 hrs</td>
+      <td>1 hr 15 min</td>
+      <td>2 hrs 30 min</td>
+      <td>3 hrs</td>
+      <td>2 hrs</td>
+      <td>1 hr 45 min</td>
+    </tr>
+    <tr>
+      <td><strong>Seraphim Falls</strong></td>
+      <td>1 hr</td>
+      <td>1 hr 15 min</td>
+      <td>1 hr 30 min</td>
+      <td>-</td>
+      <td>1 hr 45 min</td>
+      <td>1 hr</td>
+      <td>2 hrs</td>
+      <td>2 hrs 30 min</td>
+      <td>1 hr 30 min</td>
+      <td>1 hr 15 min</td>
+    </tr>
+    <tr>
+      <td><strong>Sunfire Plains</strong></td>
+      <td>2 hrs</td>
+      <td>1 hr 30 min</td>
+      <td>2 hrs</td>
+      <td>1 hr 45 min</td>
+      <td>-</td>
+      <td>1 hr 30 min</td>
+      <td>2 hrs 15 min</td>
+      <td>2 hrs 45 min</td>
+      <td>1 hr 45 min</td>
+      <td>2 hrs</td>
+    </tr>
+    <tr>
+      <td><strong>Moonlit Lagoon</strong></td>
+      <td>1 hr 15 min</td>
+      <td>45 min</td>
+      <td>1 hr 15 min</td>
+      <td>1 hr</td>
+      <td>1 hr 30 min</td>
+      <td>-</td>
+      <td>1 hr 30 min</td>
+      <td>2 hrs</td>
+      <td>1 hr</td>
+      <td>1 hr 15 min</td>
+    </tr>
+    <tr>
+      <td><strong>Starlit Observatory</strong></td>
+      <td>2 hrs</td>
+      <td>1 hr 45 min</td>
+      <td>2 hrs 30 min</td>
+      <td>2 hrs</td>
+      <td>2 hrs 15 min</td>
+      <td>1 hr 30 min</td>
+      <td>-</td>
+      <td>1 hr 45 min</td>
+      <td>2 hrs</td>
+      <td>2 hrs 30 min</td>
+    </tr>
+    <tr>
+      <td><strong>Whispering Dunes</strong></td>
+      <td>2 hrs 30 min</td>
+      <td>2 hrs</td>
+      <td>3 hrs</td>
+      <td>2 hrs 30 min</td>
+      <td>2 hrs 45 min</td>
+      <td>2 hrs</td>
+      <td>1 hr 45 min</td>
+      <td>-</td>
+      <td>2 hrs 30 min</td>
+      <td>3 hrs</td>
+    </tr>
+    <tr>
+      <td><strong>Eldoria Castle</strong></td>
+      <td>1 hr 45 min</td>
+      <td>1 hr</td>
+      <td>2 hrs</td>
+      <td>1 hr 30 min</td>
+      <td>1 hr 45 min</td>
+      <td>1 hr</td>
+      <td>2 hrs</td>
+      <td>2 hrs 30 min</td>
+      <td>-</td>
+      <td>1 hr 30 min</td>
+    </tr>
+    <tr>
+      <td><strong>Celestial Gardens</strong></td>
+      <td>1 hr 30 min</td>
+      <td>1 hr 15 min</td>
+      <td>1 hr 45 min</td>
+      <td>1 hr 15 min</td>
+      <td>2 hrs</td>
+      <td>1 hr 15 min</td>
+      <td>2 hrs 30 min</td>
+      <td>3 hrs</td>
+      <td>1 hr 30 min</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+</div>
+
+<div class="dialogue-box">
+    <div class="message person1">
+        <img class="avatar" src="user.jpg" alt="Person 1 Avatar">
+        <div class="text">I want to take a trip to Fantopia, which takes about two days.
+        </div>
+    </div>
+    <div class="message person3">
+        <div class="text">   <p>Greetings! I am The Pathfinder, your seasoned adventure travel expert, here to ensure your journey to Fantopia is a unique and unforgettable adventure.</p>
+
+            <p>Fantopia sounds like a fascinating destination! To tailor the most precise and thrilling itinerary for your two-day trip, I will need to gather the latest and most detailed information about this location.</p>
+        
+            <p>Allow me a moment to request insights from a specialized agent:</p>
+        
+            <hr>
+            <h2>Request for New Agent Form Agent Recommender:</h2>
+            <pre>
+            ```plaintext
+            Please provide an agent specialized in travel to Fantopia. 
+        
+            Details to include:
+            - Key attractions and must-visit sites
+            - Best modes of transport within the area
+            - Recommended accommodations and dining options
+            - Local customs and important cultural tips
+            - Any safety considerations or travel advisories
+        
+            Thanks in advance!
+            ```
+            </pre>
+            <hr>
+            <h2>Prompt to Consult with the New Agent:</h2>
+            <pre>
+            ```plaintext
+            Hello Agent specialized in Fantopia travel,
+        
+            I have a user planning a two-day trip to Fantopia. Could you guide me on 
+            the following:
+        
+            1. Key attractions and must-visit sites in Fantopia.
+            2. The best modes of transport within the area.
+            3. Recommended accommodations and dining options.
+            4. Local customs and important cultural tips.
+            5. Any safety considerations or travel advisories.
+        
+            Thank you!
+            ```
+            </pre>
+            <hr>
+        
+            <p>In the meantime, could you share your adventure preferences? For instance, are you more inclined towards nature, culture, adventure sports, or perhaps a mix of these? This will help me further customize the experience for you.</p>
+</div>
+
+        <img class="avatar" src="agent.jpg" alt="Person 2 Avatar">
+                
+    </div>
+</div>
+<div class="colorbox">
+
+
+    <div class="subtitle-bar-3">
+        <!-- <img class="avatar" src="rec.jpg" alt="Person 2 Avatar"> -->
+        <div class="subtitle">
+            The Agent Recommender can retrieve the Fantopia Local Agent to help the Travel Agent. <br>
+        </div>
+    </div>
+    <div class="dialogue-box">
+        <div class="message person3">
+            <div class="text"> 
+                <p>Hello Agent specialized in Fantopia travel,</p>
+                <p>I have a user planning a two-day trip to Fantopia. Could you guide me on the following:</p>
+                <ol>
+                    <li>Key attractions and must-visit sites in Fantopia.</li>
+                    <li>The best modes of transport within the area.</li>
+                    <li>Recommended accommodations and dining options.</li>
+                    <li>Local customs and important cultural tips.</li>
+                    <li>Any safety considerations or travel advisories.</li>
+                </ol>
+                <p>Thank you!</p>
+            </div>
+            <img class="avatar" src="agent.jpg" alt="Person 1 Avatar">
+    
+            </div>
+    <div class="message person4">
+        <img class="avatar" src="fant.png" alt="Person 1 Avatar">
+
+        <div class="text"><head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Two-Day Trip to Fantopia</title>
+            <style>
+                h1 {
+                    font-size: 24px;
+                }
+                h2 {
+                    font-size: 20px;
+                }
+                h3 {
+                    font-size: 18px;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Key Attractions and Must-Visit Sites in Fantopia</h1>
+        
+            <h2>Day 1:</h2>
+            <h3>Morning:</h3>
+            <p><strong>Crystal Caverns:</strong> Start your day exploring the mesmerizing underground world of glittering crystals. The recommended visiting time is 3 hours.</p>
+        
+            <h3>Afternoon:</h3>
+            <p><strong>Enchanted Forest:</strong> Spend your afternoon wandering through this magical woodland filled with mythical creatures and ancient trees. Allocate 4 hours for this visit.</p>
+        
+            <h3>Evening:</h3>
+            <p><strong>Moonlit Lagoon:</strong> End your day at this serene lagoon that glows under the moonlight. It offers a tranquil experience for 2 hours.</p>
+        
+            <h2>Day 2:</h2>
+            <h3>Morning:</h3>
+            <p><strong>Celestial Gardens:</strong> Begin your second day with a visit to this botanical paradise, which takes about 2 hours.</p>
+        
+            <h3>Mid-Morning:</h3>
+            <p><strong>Eldoria Castle:</strong> Explore the ancient castle with its rich history and stunning architecture. This attraction generally takes about 4 hours.</p>
+        
+            <h3>Late Afternoon/Evening:</h3>
+            <p><strong>Starlit Observatory:</strong> Finally, enjoy a night of stargazing and astronomical exploration. Allocate around 2 hours for this visit.</p>
+        
+            <h1>Best Modes of Transport Within the Area</h1>
+            <p>Fantopia offers various transport options to move between attractions:</p>
+            <ul>
+                <li><strong>Shuttle Buses:</strong> These are available for tourists and run between major attractions. They are convenient and affordable.</li>
+                <li><strong>Rental Bikes:</strong> For a more flexible mode of travel, bicycles allow you to explore the surroundings more intimately.</li>
+                <li><strong>Private Car/Taxi:</strong> For ultimate convenience and comfort, especially if traveling in a group or with family.</li>
+                <li><strong>Walking Tours:</strong> Some attractions are best explored on foot, especially the scenic ones like Skyward Spires and Whispering Dunes.</li>
+            </ul>
+        
+            <h1>Recommended Accommodations and Dining Options</h1>
+        
+            <h2>Accommodations:</h2>
+            <ul>
+                <li><strong>Fantopia Grand Hotel:</strong> A luxurious option located centrally with easy access to most attractions.</li>
+                <li><strong>Enchanted Lodges:</strong> These offer a unique stay experience close to the Enchanted Forest.</li>
+                <li><strong>Castle Inn:</strong> Located near Eldoria Castle, this is perfect for history enthusiasts.</li>
+            </ul>
+        
+            <h2>Dining Options:</h2>
+            <ul>
+                <li><strong>Crystal Café:</strong> Near Crystal Caverns, great for breakfast or a light brunch.</li>
+                <li><strong>Forest Hearth:</strong> A cozy spot inside Enchanted Forest, offering traditional meals and snacks.</li>
+                <li><strong>Sky High Diner:</strong> Located near Skyward Spires, offering meals with a view.</li>
+                <li><strong>Lagoon Bistro:</strong> Ideal for a romantic dinner near Moonlit Lagoon.</li>
+            </ul>
+        
+            <h1>Local Customs and Important Cultural Tips</h1>
+            <ul>
+                <li><strong>Respect Nature:</strong> Fantopia places a high emphasis on natural preservation. Make sure to follow guidelines regarding wildlife and plant life.</li>
+                <li><strong>Local Traditions:</strong> Participate in local customs, like tying a ribbon at the Wishing Tree in the Enchanted Forest.</li>
+                <li><strong>Dressing Modestly:</strong> Especially around historical and religious sites like Eldoria Castle.</li>
+                <li><strong>Greetings:</strong> A simple nod and smile are common polite greetings.</li>
+            </ul>
+        
+            <h1>Safety Considerations or Travel Advisories</h1>
+            <ul>
+                <li><strong>Stay on Marked Trails:</strong> Particularly in areas like Whispering Dunes and the Enchanted Forest to avoid getting lost.</li>
+                <li><strong>Wildlife Caution:</strong> Keep a safe distance from wildlife, especially in Sunfire Plains.</li>
+                <li><strong>Weather Preparedness:</strong> Fantopia can have variable weather, so carry layers of clothing and waterproof gear if necessary.</li>
+                <li><strong>Hydration and Snacks:</strong> Always keep water and snacks handy, especially when exploring more remote locations like Skyward Spires and Whispering Dunes.</li>
+                <li><strong>Respect Signs and Instructions:</strong> Follow all warning signs and instructions provided by guides and at the attractions for your safety.</li>
+            </ul>
+        
+            <p>If you need any further customization or additional information, feel free to ask!</p>
+        </body>          </div>
+
+        </div>
+
+
+
+
+
+    </div>
+
+</div>
+
+
+<div class="subtitle-bar-3">
+    <div class="subtitle">
+        Send Local Agent's response together with user's request to the Travel Agent.<br>
+    </div>
+</div>
+
+<div class="dialogue-box">
+<div class="message person1">
+    <img class="avatar" src="user.jpg" alt="Person 1 Avatar">
+    <div class="text">
+        Ok, the mix of them. Please tell me in a concise way.
+        <div class="message person6">
+            <div class="text">
+        (Expert Agent Response: <br>
+        <p>Sure, I'd be happy to provide information for the user's two-day trip to Fantopia.</p>
+    
+        <h2>1. Key Attractions and Must-Visit Sites in Fantopia</h2>
+        <p>Based on a two-day visit, here are some recommended attractions:</p>
+    
+        <h3>Day 1:</h3>
+        <ul>
+            <li><strong>Morning:</strong>
+                <ul>
+                    <li><strong>Crystal Caverns:</strong> Start your day exploring the mesmerizing underground world of glittering crystals. The recommended visiting time is 3 hours.</li>
+                </ul>
+            </li>
+            <li><strong>Afternoon:</strong>
+                <ul>
+                    <li><strong>Enchanted Forest:</strong> Spend your afternoon wandering through this magical woodland filled with mythical creatures and ancient trees. Allocate 4 hours for this visit.</li>
+                </ul>
+            </li>
+            <li><strong>Evening:</strong>
+                <ul>
+                    <li><strong>Moonlit Lagoon:</strong> End your day at this serene lagoon that glows under the moonlight. It offers a tranquil experience for 2 hours.</li>
+                </ul>
+            </li>
+        </ul>
+    
+        <h3>Day 2:</h3>
+        <ul>
+            <li><strong>Morning:</strong>
+                <ul>
+                    <li><strong>Celestial Gardens:</strong> Begin your second day with a visit to this botanical paradise, which takes about 2 hours.</li>
+                </ul>
+            </li>
+            <li><strong>Mid-Morning:</strong>
+                <ul>
+                    <li><strong>Eldoria Castle:</strong> Explore the ancient castle with its rich history and stunning architecture. This attraction generally takes about 4 hours.</li>
+                </ul>
+            </li>
+            <li><strong>Late Afternoon/Evening:</strong>
+                <ul>
+                    <li><strong>Starlit Observatory:</strong> Finally, enjoy a night of stargazing and astronomical exploration. Allocate around 2 hours for this visit.</li>
+                </ul>
+            </li>
+        </ul>
+    
+        <h2>2. Best Modes of Transport Within the Area</h2>
+        <p>Fantopia offers various transport options to move between attractions:</p>
+        <ul>
+            <li><strong>Shuttle Buses:</strong> These are available for tourists and run between major attractions. They are convenient and affordable.</li>
+            <li><strong>Rental Bikes:</strong> For a more flexible mode of travel, bicycles allow you to explore the surroundings more intimately.</li>
+            <li><strong>Private Car/Taxi:</strong> For ultimate convenience and comfort, especially if traveling in a group or with family.</li>
+            <li><strong>Walking Tours:</strong> Some attractions are best explored on foot, especially the scenic ones like Skyward Spires and Whispering Dunes.</li>
+        </ul>
+    
+        <h2>3. Recommended Accommodations and Dining Options</h2>
+    
+        <h3>Accommodations:</h3>
+        <ul>
+            <li><strong>Fantopia Grand Hotel:</strong> A luxurious option located centrally with easy access to most attractions.</li>
+            <li><strong>Enchanted Lodges:</strong> These offer a unique stay experience close to the Enchanted Forest.</li>
+            <li><strong>Castle Inn:</strong> Located near Eldoria Castle, this is perfect for history enthusiasts.</li>
+        </ul>
+    
+        <h3>Dining Options:</h3>
+        <ul>
+            <li><strong>Crystal Café:</strong> Near Crystal Caverns, great for breakfast or a light brunch.</li>
+            <li><strong>Forest Hearth:</strong> A cozy spot inside Enchanted Forest, offering traditional meals and snacks.</li>
+            <li><strong>Sky High Diner:</strong> Located near Skyward Spires, offering meals with a view.</li>
+            <li><strong>Lagoon Bistro:</strong> Ideal for a romantic dinner near Moonlit Lagoon.</li>
+        </ul>
+    
+        <h2>4. Local Customs and Important Cultural Tips</h2>
+        <ul>
+            <li><strong>Respect Nature:</strong> Fantopia places a high emphasis on natural preservation. Make sure to follow guidelines regarding wildlife and plant life.</li>
+            <li><strong>Local Traditions:</strong> Participate in local customs, like tying a ribbon at the Wishing Tree in the Enchanted Forest.</li>
+            <li><strong>Dressing Modestly:</strong> Especially around historical and religious sites like Eldoria Castle.</li>
+            <li><strong>Greetings:</strong> A simple nod and smile are common polite greetings.</li>
+        </ul>
+    
+        <h2>5. Safety Considerations or Travel Advisories</h2>
+        <ul>
+            <li><strong>Stay on Marked Trails:</strong> Particularly in areas like Whispering Dunes and the Enchanted Forest to avoid getting lost.</li>
+            <li><strong>Wildlife Caution:</strong> Keep a safe distance from wildlife, especially in Sunfire Plains.</li>
+            <li><strong>Weather Preparedness:</strong> Fantopia can have variable weather, so carry layers of clothing and waterproof gear if necessary.</li>
+            <li><strong>Hydration and Snacks:</strong> Always keep water and snacks handy, especially when exploring more remote locations like Skyward Spires and Whispering Dunes.</li>
+            <li><strong>Respect Signs and Instructions:</strong> Follow all warning signs and instructions provided by guides and at the attractions for your safety.</li>
+        </ul>
+    
+        <p>If you need any further customization or additional information, feel free to ask!</p> <br>
+
+    </div>
+    </div>
+
+
+</div>
+
+</div>
+
+<div class="message person3">
+    <div class="text">
+        Thank you for your patience. Here is a concise itinerary for your two-day adventure in Fantopia, combining nature, culture, and a hint of adventure:
+
+<div class="section">
+    <h2>Day 1:</h2>
+    <ul>
+        <li><strong>Morning:</strong>
+            <ul>
+                <li><strong>Crystal Caverns:</strong> Explore the underground world of glittering crystals (3 hours).</li>
+            </ul>
+        </li>
+        <li><strong>Afternoon:</strong>
+            <ul>
+                <li><strong>Enchanted Forest:</strong> Wander through the magical woodland filled with mythical creatures and ancient trees (4 hours).</li>
+            </ul>
+        </li>
+        <li><strong>Evening:</strong>
+            <ul>
+                <li><strong>Moonlit Lagoon:</strong> Experience the serene, glowing lagoon under moonlight (2 hours).</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Day 2:</h2>
+    <ul>
+        <li><strong>Morning:</strong>
+            <ul>
+                <li><strong>Celestial Gardens:</strong> Visit this botanical paradise (2 hours).</li>
+            </ul>
+        </li>
+        <li><strong>Mid-Morning:</strong>
+            <ul>
+                <li><strong>Eldoria Castle:</strong> Explore the ancient castle with its rich history and stunning architecture (4 hours).</li>
+            </ul>
+        </li>
+        <li><strong>Late Afternoon/Evening:</strong>
+            <ul>
+                <li><strong>Starlit Observatory:</strong> Enjoy a night of stargazing and astronomical exploration (2 hours).</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Transport Options:</h2>
+    <ul>
+        <li><strong>Shuttle Buses:</strong> Convenient and affordable for tourists.</li>
+        <li><strong>Rental Bikes:</strong> Flexible and allows for intimate exploration.</li>
+        <li><strong>Private Car/Taxi:</strong> Comfortable for group or family travel.</li>
+        <li><strong>Walking Tours:</strong> Best for scenic areas.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Accommodation Recommendations:</h2>
+    <ul>
+        <li><strong>Fantopia Grand Hotel:</strong> Luxurious and centrally located.</li>
+        <li><strong>Enchanted Lodges:</strong> Unique stay near the Enchanted Forest.</li>
+        <li><strong>Castle Inn:</strong> Perfect for history enthusiasts, near Eldoria Castle.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Dining Recommendations:</h2>
+    <ul>
+        <li><strong>Crystal Café:</strong> Great for breakfast/light brunch near Crystal Caverns.</li>
+        <li><strong>Forest Hearth:</strong> Traditional meals inside Enchanted Forest.</li>
+        <li><strong>Sky High Diner:</strong> Offers meals with a view near Skyward Spires.</li>
+        <li><strong>Lagoon Bistro:</strong> Ideal for a romantic dinner near Moonlit Lagoon.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Cultural Tips:</h2>
+    <ul>
+        <li><strong>Respect Nature:</strong> Follow guidelines regarding wildlife and plant life.</li>
+        <li><strong>Local Traditions:</strong> Participate in customs like tying a ribbon at the Wishing Tree.</li>
+        <li><strong>Modest Dressing:</strong> Especially at historical/religious sites.</li>
+        <li><strong>Polite Greetings:</strong> A nod and smile are common.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Safety Considerations:</h2>
+    <ul>
+        <li><strong>Stay on Marked Trails:</strong> Avoid getting lost.</li>
+        <li><strong>Wildlife Caution:</strong> Keep a safe distance.</li>
+        <li><strong>Weather Preparedness:</strong> Carry layers and waterproof gear.</li>
+        <li><strong>Hydration and Snacks:</strong> Essential for remote locations.</li>
+        <li><strong>Respect Signs/Instructions:</strong> Follow all guidelines for your safety.</li>
+    </ul>
+</div>
+
+<p>If you need further customization or additional information, feel free to ask. Enjoy your thrilling adventure to Fantopia!</p>
+
+    </div>
+    <img class="avatar" src="agent.jpg" alt="Person 1 Avatar">
+
+    </div>
+
+</div>
+
+</body>
+</html>
